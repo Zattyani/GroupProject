@@ -1,0 +1,66 @@
+<%- include ../partials/header.ejs %>
+<%- include ../partials/main_nav.ejs %> 
+
+<!-- Content for the edit page -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-16">
+            <h1><%= title %></h1>
+            <form class="form" method="post">
+                
+                <div class="form-group">
+                    <label for="taskTextField"> Task</label>
+                    <input type="text" class="form-control"
+                    id="taskTextField"
+                    placeholder="Enter the task"
+                    name="Task" 
+                    value="<%= task.Task %>"
+                    required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateTextField"> Date</label>
+                    <input type="text" class="form-control"
+                    id="dateTextField"
+                    placeholder="Enter the date of the task"
+                    name="Date" 
+                    value="<%= task.Date %>"
+                    required>
+                </div>
+
+                <div class="form-group">
+                    <label for="durationTextField"> Duration</label>
+                    <input type="text" class="form-control"
+                    id="durationTextField"
+                    placeholder="Enter the duration for the task"
+                    name="Duration" 
+                    value="<%= task.Duration %>"
+                    required>
+                </div>
+
+                <div class="form-group">
+                    <label for="desTextField"> Description</label>
+                    <textarea type="text" class="form-control"
+                    id="desTextField"
+                    placeholder="Enter the description"
+                    name="Description">
+                    <%= task.Description %>
+                    </textarea>
+                </div>
+                <br>
+
+                <button class="btn-btn-primary" type="submit">
+                    <i class="fas fa-edit"></i> Submit
+                </button>
+
+                <a href="/task-list" class="btn btn-warning">
+                    <i class="fas fa-undo"></i>Cancel</a>
+            
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include ../partials/bottom_nav.ejs %>  
+<%- include ../partials/footer.ejs %> 

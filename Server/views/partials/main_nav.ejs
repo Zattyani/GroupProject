@@ -1,0 +1,36 @@
+<nav class= "navbar navbar-dark bg-primary"> 
+    <div class="container-fluid">
+          <i class="fa-solid fa-people-group"></i>
+
+      <a class="navbar-brand" href="#">Group 30 Final Project</a>
+
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          
+
+          <li class="nav-item">
+          <% if (title == "Home"){%>
+            <a class="nav-link active" href="/home">
+          <%} else{%>
+            <a class="nav-link" href="/home">
+          <% } %>
+            <i class="fa-solid fa-house"></i>
+            Home</a>
+          </li>
+
+          <li class="nav-item">
+          <% if (title == "Tasks"){%>
+            <a class="nav-link active" href="/task-list">
+          <%} else{%>
+            <a class="nav-link" href="/task-list">
+          <% } %>
+            <i class="fa-solid fa-list-check"></i>
+            Tasks</a>
+          </li>
+      
+    </div>
+  </nav>
