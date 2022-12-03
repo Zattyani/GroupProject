@@ -2,6 +2,9 @@ let express = require('express');
 const passport = require('passport');
 let router = express.Router();
 
+let userModel = require('../models/user');
+let User = userModel.User
+
 module.exports.displayHomePage = (req,res,next) =>
 {
     res.render('index',{

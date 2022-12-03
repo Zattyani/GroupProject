@@ -13,7 +13,7 @@ let app = express();
 
 // create a user model instance
 let userModel = require('../models/user');
-let user = userModel.User;
+let User = userModel.User;
 
 
 //config mongoDB
@@ -35,9 +35,12 @@ app.use(session({
   resave:false
 }))
 
+// implement a User Authentication
+passport.use(User.createStrategy());
+
 // serialize and deserialize the user information
-passport.serializeUser(user.serializeUser());
-passport.deserializeUser(user.deserializeUser());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // initialize passport
 app.use(passport.initialize());
