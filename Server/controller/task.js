@@ -18,13 +18,18 @@ module.exports.displayTaskList = (req,res,next)=>{
         {
             res.render('task/list',{
                 title:'Task',
-                TaskList: tasklist});
-        }
+                TaskList: tasklist,
+                displayName: req.user ? req.user.displayName:''
+        })
+    }
     });
 }
 
 module.exports.displayAddPage = (req,res,next)=>{
-    res.render('task/add',{title:'Add Task'})
+    res.render('task/add',{
+        title:'Add Task',
+        displayName: req.user ? req.user.displayName:''
+    })
 };
 
 module.exports.processAddPage = (req,res,next)=>{
@@ -57,7 +62,9 @@ module.exports.displayEditPage = (req,res,next)=>{
         }
         else
         {
-            res.render('task/edit',{title:'Edit Task', task:taskToEdit})
+            res.render('task/edit',{title:'Edit Task',
+            task:taskToEdit,
+            displayName: req.user ? req.user.displayName:''})
         }
     });
 };

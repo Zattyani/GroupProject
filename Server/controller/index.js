@@ -8,7 +8,8 @@ let User = userModel.User
 module.exports.displayHomePage = (req,res,next) =>
 {
     res.render('index',{
-        title: 'Home'
+        title: 'Home',
+        displayName: req.user ? req.user.displayName: ''
     });
 }
 
@@ -106,6 +107,10 @@ module.exports.processRegisterPage = (req,res,next)=>{
 
 module.exports.performLogout = (req,res,next)=>
 {
-    req.logout();
+    req.logout(function(err){
+        if(err){
+            return next(err);
+        }
+    });
     res.redirect('/')
 }

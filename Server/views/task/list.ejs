@@ -9,9 +9,12 @@
     <div class="row">
     <div class="col-md-offset-3 col-md-14">
     <h1><%= title %></h1>
-    <a href="/task-list/add" class="btn btn-primary" role="button">
+
+    <% if(typeof displayName=="string" && displayName) { %>
+      <a href="/task-list/add" class="btn btn-primary" role="button">
       <i class="fas fa-plus-circle"></i> Add a task</a>
     <br>
+    <% } %>
     <br>
     <table class= "table table-bordered table-striped table-hover">
     <tr class="d-flex">
@@ -19,8 +22,10 @@
         <th class= "text-center col-2">Date</th>
         <th class= "text-center col-1">Duration</th>
         <th class= "text-center col-5">Description</th>
+      <% if(typeof displayName=='string' && displayName) { %>
         <th class= "text-center col-1"></th>
         <th class= "text-center col-1"></th>
+      <% } %>
     </tr>
     <!-- Repeat the template -->
     <% for(let count=0; count < TaskList.length; count++){ %>
@@ -29,6 +34,7 @@
             <td class="text-center col-2"><%= TaskList[count].Date %></td>
             <td class="text-center col-1"><%= TaskList[count].Duration %></td>
             <td class="text-center col-5"><%= TaskList[count].Description %></td>
+        <% if(typeof displayName=='string' && displayName) { %>
             <td class="text-center col-1">
               <a href="/task-list/edit/<%= TaskList[count]._id %>"
                 class="btn btn-primary">
@@ -38,6 +44,8 @@
               <a href="/task-list/delete/<%= TaskList[count]._id %>"
                 class="btn btn-danger">
                 <i class="fas fa-trash-alt"></i> Delete </a>
+            </td>
+            <% } %>
         </tr>
     <% } %>
     </table>
