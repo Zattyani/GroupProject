@@ -8,6 +8,7 @@ let session = require('express-session');
 let passport = require('passport');
 let passportLocal  = require('passport-local');
 let localStrategy = passportLocal.Strategy;
+let GitHubStrategy = require('passport-github').Strategy;
 let flash = require('connect-flash');
 let app = express();
 
@@ -27,6 +28,32 @@ mongoDB.on('error',console.error.bind(console,'Connection Error:'));
 mongoDB.once('open', () => {
   console.log('Connected to the MongoDB.');
 });
+
+passport.use(new GitHubStrategy({
+  clientID: "2859e3c547951480494c",
+  clientSecret: "754aba86f007fcd6b39b0a86583da08e09d3711e",
+  callbackURL: "http://localhost:3000/auth/github/callback"
+},
+function(accessToken, refreshToken, profile, cb) {
+  // User.findOrCreate({ githubId: profile.id }, function (err, user) {
+  //   return cb(err, user);
+  console.log(profile);
+  cb(null, profile);
+  }
+)
+);
+
+//auth
+app.get('/auth/github',
+passport.authenticate('github'));
+
+app.get('/auth/github/callback', 
+passport.authenticate('github', { failureRedirect: '/login' }),
+function(req, res) {
+  // Successful authentication, redirect home.
+  res.redirect('/');
+});
+
 
 // set-up Express Session
 app.use(session({
