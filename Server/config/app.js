@@ -9,6 +9,7 @@ let passport = require('passport');
 let passportLocal  = require('passport-local');
 let localStrategy = passportLocal.Strategy;
 let GitHubStrategy = require('passport-github').Strategy;
+let SlackStrategy = require('passport-slack').Strategy;
 let flash = require('connect-flash');
 let app = express();
 
@@ -61,6 +62,28 @@ app.use(session({
   saveUninitialized:false,
   resave:false
 }))
+
+// setup the strategy using defaults 
+passport.use(new SlackStrategy({
+  clientID: "4513648470992.4513663246304",
+  clientSecret: "1a4aa5248d43560e4a4b41fd33af48e8"
+}, (accessToken, refreshToken, profile, done) => {
+  // optionally persist profile data
+  done(null, profile);
+}
+));
+
+app.use(passport.initialize());
+app.use(require('body-parser').urlencoded({ extended: true }));
+
+// path to start the OAuth flow
+app.get('/auth/slack', passport.authorize('slack'));
+
+// OAuth callback url
+app.get('/auth/slack/callback', 
+passport.authorize('slack', { failureRedirect: '/login' }),
+(req, res) => res.redirect('/')
+);
 
 // implement a User Authentication
 passport.use(User.createStrategy());
