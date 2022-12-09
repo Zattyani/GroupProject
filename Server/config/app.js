@@ -11,7 +11,6 @@ let localStrategy = passportLocal.Strategy;
 let GitHubStrategy = require('passport-github').Strategy;
 let SlackStrategy = require('passport-slack').Strategy;
 let InstagramStrategy = require('passport-instagram').Strategy;
-
 let flash = require('connect-flash');
 let app = express();
 
