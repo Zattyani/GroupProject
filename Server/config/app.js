@@ -11,6 +11,7 @@ let localStrategy = passportLocal.Strategy;
 let GitHubStrategy = require('passport-github').Strategy;
 let SlackStrategy = require('passport-slack').Strategy;
 let InstagramStrategy = require('passport-instagram').Strategy;
+
 let flash = require('connect-flash');
 let app = express();
 
@@ -85,6 +86,7 @@ app.get('/auth/slack/callback',
 passport.authorize('slack', { failureRedirect: '/login' }),
 (req, res) => res.redirect('/')
 );
+
 
 passport.use(new InstagramStrategy({
   clientID: "686348806231702",
