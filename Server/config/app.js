@@ -7,10 +7,10 @@ let logger = require('morgan');
 let session = require('express-session');
 let passport = require('passport');
 let passportLocal  = require('passport-local');
-let localStrategy = passportLocal.Strategy;
-let GitHubStrategy = require('passport-github').Strategy;
-let SlackStrategy = require('passport-slack').Strategy;
-let InstagramStrategy = require('passport-instagram').Strategy;
+// let localStrategy = passportLocal.Strategy;
+// let GitHubStrategy = require('passport-github').Strategy;
+// let SlackStrategy = require('passport-slack').Strategy;
+// let InstagramStrategy = require('passport-instagram').Strategy;
 let flash = require('connect-flash');
 let app = express();
 
@@ -31,30 +31,30 @@ mongoDB.once('open', () => {
   console.log('Connected to the MongoDB.');
 });
 
-passport.use(new GitHubStrategy({
-  clientID: "2859e3c547951480494c",
-  clientSecret: "754aba86f007fcd6b39b0a86583da08e09d3711e",
-  callbackURL: "http://localhost:3000/auth/github/callback"
-},
-function(accessToken, refreshToken, profile, cb) {
-  // User.findOrCreate({ githubId: profile.id }, function (err, user) {
-  //   return cb(err, user);
-  console.log(profile);
-  cb(null, profile);
-  }
-)
-);
+// passport.use(new GitHubStrategy({
+//   clientID: "2859e3c547951480494c",
+//   clientSecret: "754aba86f007fcd6b39b0a86583da08e09d3711e",
+//   callbackURL: "http://localhost:3000/auth/github/callback"
+// },
+// function(accessToken, refreshToken, profile, cb) {
+//    User.findOrCreate({ githubId: profile.id }, function (err, user) {
+//      return cb(err, user);
+//   // console.log(profile);
+//   // cb(null, profile);
+//   }
+// )}
+// ));
 
-//auth
-app.get('/auth/github',
-passport.authenticate('github'));
+// //auth
+// app.get('/auth/github',
+// passport.authenticate('github'));
 
-app.get('/auth/github/callback', 
-passport.authenticate('github', { failureRedirect: '/login' }),
-function(req, res) {
-  // Successful authentication, redirect home.
-  res.redirect('/');
-});
+// app.get('/auth/github/callback', 
+// passport.authenticate('github', { failureRedirect: '/login' }),
+// function(req, res) {
+//   // Successful authentication, redirect home.
+//   res.redirect('/');
+// });
 
 
 // set-up Express Session
@@ -64,53 +64,53 @@ app.use(session({
   resave:false
 }))
 
-// setup the strategy using defaults 
-passport.use(new SlackStrategy({
-  clientID: "4513648470992.4513663246304",
-  clientSecret: "1a4aa5248d43560e4a4b41fd33af48e8"
-}, (accessToken, refreshToken, profile, done) => {
-  // optionally persist profile data
-  done(null, profile);
-}
-));
+// // setup the strategy using defaults 
+// passport.use(new SlackStrategy({
+//   clientID: "4513648470992.4513663246304",
+//   clientSecret: "1a4aa5248d43560e4a4b41fd33af48e8"
+// }, (accessToken, refreshToken, profile, done) => {
+//   // optionally persist profile data
+//   done(null, profile);
+// }
+// ));
 
-app.use(passport.initialize());
-app.use(require('body-parser').urlencoded({ extended: true }));
+// app.use(passport.initialize());
+// app.use(require('body-parser').urlencoded({ extended: true }));
 
-// path to start the OAuth flow
-app.get('/auth/slack', passport.authorize('slack'));
+// // path to start the OAuth flow
+// app.get('/auth/slack', passport.authorize('slack'));
 
-// OAuth callback url
-app.get('/auth/slack/callback', 
-passport.authorize('slack', { failureRedirect: '/login' }),
-(req, res) => res.redirect('/')
-);
+// // OAuth callback url
+// app.get('/auth/slack/callback', 
+// passport.authorize('slack', { failureRedirect: '/login' }),
+// (req, res) => res.redirect('/')
+// );
 
 
-passport.use(new InstagramStrategy({
-  clientID: "686348806231702",
-  clientSecret: "374ab4cdd969c4774f17d0721e095e49",
-  callbackURL: "http://localhost:3000/auth/instagram/callback"
-},
-function(accessToken, refreshToken, profile, done) {
- // User.findOrCreate({ instagramId: profile.id }, function (err, user) {
-  //  return done(err, user);
-  console.log(profile);
-  cb(null, profile);
+// passport.use(new InstagramStrategy({
+//   clientID: "686348806231702",
+//   clientSecret: "374ab4cdd969c4774f17d0721e095e49",
+//   callbackURL: "http://localhost:3000/auth/instagram/callback"
+// },
+// function(accessToken, refreshToken, profile, done) {
+//  // User.findOrCreate({ instagramId: profile.id }, function (err, user) {
+//   //  return done(err, user);
+//   console.log(profile);
+//   cb(null, profile);
 
-}
-));
+// }
+// ));
 
-//Auth
-app.get('/auth/instagram',
-  passport.authenticate('instagram'));
+// //Auth
+// app.get('/auth/instagram',
+//   passport.authenticate('instagram'));
 
-app.get('/auth/instagram/callback', 
-  passport.authenticate('instagram', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+// app.get('/auth/instagram/callback', 
+//   passport.authenticate('instagram', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     // Successful authentication, redirect home.
+//     res.redirect('/');
+//   });
 
 
 // implement a User Authentication
